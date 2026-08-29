@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parry Lands Village Market</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: #f4f1ea; color: #2e2e2e; }
+
+  header {
+    background: linear-gradient(135deg, #3f7d3f, #2e5e2e);
+    color: #fff;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  header h1 { font-size: 26px; margin-bottom: 6px; }
+  header p { font-size: 14px; opacity: 0.9; }
+
+  .greeting-box {
+    max-width: 500px;
+    margin: -25px auto 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .greeting-box h2 { font-size: 20px; color: #2e5e2e; margin-bottom: 8px; }
+  .balance {
+    display: inline-block;
+    margin-top: 10px;
+    background: #eaf5ea;
+    color: #2e5e2e;
+    font-weight: bold;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 15px;
+  }
+
+  .section-title {
+    text-align: center;
+    margin: 35px 0 15px 0;
+    font-size: 20px;
+    color: #2e5e2e;
+  }
+
+  .produce-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 20px 25px 20px;
+  }
+  .produce-card {
+    flex: 0 0 auto;
+    width: 130px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 14px 10px;
+  }
+  .produce-card .emoji { font-size: 32px; margin-bottom: 8px; }
+  .produce-card h3 { font-size: 14px; margin-bottom: 4px; }
+  .produce-card p { font-size: 13px; color: #555; }
+
+  footer {
+    text-align: center;
+    padding: 25px 15px;
+    font-size: 13px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Parry Lands Village Market</h1>
+  <p>Fresh produce, straight from the community. Open 6:30 AM to 7:00 PM.</p>
+</header>
+
+<div class="greeting-box" id="greetingBox">
+  <h2 id="greetingText">Loading your account...</h2>
+  <div class="balance" id="balanceText"></div>
+</div>
+
+<h2 class="section-title">Today's Market</h2>
+
+<div class="produce-scroll">
+  <div class="produce-card"><div class="emoji">🥬</div><h3>Lettuce</h3><p>5 points</p></div>
+  <div class="produce-card"><div class="emoji">🧅</div><h3>Onion</h3><p>4 points</p></div>
+  <div class="produce-card"><div class="emoji">🍅</div><h3>Tomato</h3><p>5 points</p></div>
+  <div class="produce-card"><div class="emoji">🥒</div><h3>Cucumber</h3><p>4 points</p></div>
+  <div class="produce-card"><div class="emoji">🌶️</div><h3>Sweet Pepper</h3><p>6 points</p></div>
+  <div class="produce-card"><div class="emoji">🎃</div><h3>Pumpkin</h3><p>7 points</p></div>
+  <div class="produce-card"><div class="emoji">🍆</div><h3>Ochro</h3><p>5 points</p></div>
+  <div class="produce-card"><div class="emoji">🍌</div><h3>Plantain</h3><p>6 points</p></div>
+</div>
+
+<footer>
+  Parry Lands Village Market &mdash; community grown, community owned.
+</footer>
+
+<script>
+  // ---- Time-based greeting ----
+  function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    return "Good night";
+  }
+
+  // ---- Simulated customer account lookup ----
+  // In production, this data would come from a real database, matched by
+  // the unique code embedded in each customer's QR code (e.g. via URL parameter ?card=XXXX)
+  const sampleAccounts = {
+    "demo123": { name: "Margaret", points: 75 },
+    "demo456": { name: "Joseph", points: 42 }
+  };
+
+  function getCardCodeFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("card");
+  }
+
+  function loadAccount() {
+    const code = getCardCodeFromURL();
+    const account = sampleAccounts[code];
+    const greetingText = document.getElementById("greetingText");
+    const balanceText = document.getElementById("balanceText");
+
+    if (account) {
+      greetingText.textContent = `${getGreeting()}, ${account.name}`;
+      balanceText.textContent = `${account.points} points available`;
+    } else {
+      greetingText.textContent = `${getGreeting()}! Welcome to the market.`;
+      balanceText.textContent = "Scan your card to view your points balance";
+    }
+  }
+
+  loadAccount();
+</script>
+
+</body>
+</html>
